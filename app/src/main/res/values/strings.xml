@@ -4,6 +4,13 @@
     <string name="journal">Журнал</string>
     <string name="setting">Настройки</string>
     <string name="profile">Профиль</string>
+    <string name="my_kits">Мои Наборы</string>
+    <string name="create_kit">Создание Аптечки</string>
+    <string name="update_kit">Изменение Аптечки</string>
+    <string name="name">Название</string>
+    <string name="add">Добавить</string>
+    <string name="update">Изменить</string>
+    <string name="delete">Удалить</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

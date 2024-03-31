@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Night themes-->
+    <color name="mainColor">#222831</color>
+    <color name="secondaryColor1">#232529</color>
+    <color name="secondaryColor2">#00adb5</color>
+    <color name="text">#eeeeee</color>
+</resources>
