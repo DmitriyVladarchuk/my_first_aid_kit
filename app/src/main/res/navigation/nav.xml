@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/fragmentKitsList">
+
+    <fragment
+        android:id="@+id/fragmentKitsList"
+        android:name="com.example.my_first_aid_kit.screen.kits.FragmentKitsList"
+        android:label="fragment_kits_list"
+        tools:layout="@layout/fragment_kits_list" >
+        <action
+            android:id="@+id/action_fragmentKitsList_to_fragmentMedicamentList"
+            app:destination="@id/fragmentMedicamentList" />
+        <action
+            android:id="@+id/action_fragmentKitsList_to_fragmentAddKit"
+            app:destination="@id/fragmentAddKit" />
+        <action
+            android:id="@+id/action_fragmentKitsList_to_fragmentUpdateKit"
+            app:destination="@id/fragmentUpdateKit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentJournalList"
+        android:name="com.example.my_first_aid_kit.screen.journal.FragmentJournalList"
+        android:label="fragment_journal_list"
+        tools:layout="@layout/fragment_journal_list" />
+    <fragment
+        android:id="@+id/fragmentSetting"
+        android:name="com.example.my_first_aid_kit.screen.setting.FragmentSetting"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.example.my_first_aid_kit.screen.profile.FragmentProfile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/fragmentMedicamentList"
+        android:name="com.example.my_first_aid_kit.screen.medicamention.FragmentMedicamentList"
+        android:label="fragment_medicamention_list"
+        tools:layout="@layout/fragment_medicamention_list" >
+        <action
+            android:id="@+id/action_fragmentMedicamentList_to_fragmentAddMedicament"
+            app:destination="@id/fragmentAddMedicament" />
+        <action
+            android:id="@+id/action_fragmentMedicamentList_to_fragmentUpdateMedicament"
+            app:destination="@id/fragmentUpdateMedicament" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentAddKit"
+        android:name="com.example.my_first_aid_kit.screen.kits.add.FragmentAddKit"
+        android:label="fragment_add_kit"
+        tools:layout="@layout/fragment_add_kit" />
+    <fragment
+        android:id="@+id/fragmentAddMedicament"
+        android:name="com.example.my_first_aid_kit.screen.medicamention.add.FragmentAddMedicament"
+        android:label="fragment_add_medicament"
+        tools:layout="@layout/fragment_add_medicament" />
+    <fragment
+        android:id="@+id/fragmentUpdateKit"
+        android:name="com.example.my_first_aid_kit.screen.kits.update.FragmentUpdateKit"
+        android:label="FragmentUpdateKit" />
+    <fragment
+        android:id="@+id/fragmentUpdateMedicament"
+        android:name="com.example.my_first_aid_kit.screen.medicamention.update.FragmentUpdateMedicament"
+        android:label="FragmentUpdateMedicament" />
+</navigation>

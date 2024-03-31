@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">my_first_aid_kit</string>
+    <string name="Kits">Наборы</string>
+    <string name="journal">Журнал</string>
+    <string name="setting">Настройки</string>
+    <string name="profile">Профиль</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
