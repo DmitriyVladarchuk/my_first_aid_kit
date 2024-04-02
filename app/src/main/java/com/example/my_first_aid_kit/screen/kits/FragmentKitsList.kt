@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,7 +54,9 @@ class FragmentKitsList : Fragment(), RVKitAdapter.EventKit {
     }
 
     override fun clickKit(position: Int) {
-        view?.findNavController()?.navigate(R.id.action_fragmentKitsList_to_fragmentMedicamentList)
+        val action = FragmentKitsListDirections
+            .actionFragmentKitsListToFragmentMedicamentList(1)
+        view?.findNavController()?.navigate(action)
     }
 
     override fun clickAddKit() {
@@ -67,6 +70,12 @@ class FragmentKitsList : Fragment(), RVKitAdapter.EventKit {
         // other code
         val textInfo = dialog.findViewById<TextView>(R.id.tvInfoBottom)
         textInfo.text = kit.name
+
+        val btnEdit = dialog.findViewById<Button>(R.id.btnEditKit)
+        btnEdit.setOnClickListener{
+            view?.findNavController()?.navigate(R.id.action_fragmentKitsList_to_fragmentUpdateKit)
+            dialog.cancel()
+        }
 
         dialog.show()
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)

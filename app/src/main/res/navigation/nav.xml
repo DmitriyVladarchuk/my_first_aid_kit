@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_fragmentMedicamentList_to_fragmentUpdateMedicament"
             app:destination="@id/fragmentUpdateMedicament" />
+        <argument
+            android:name="idKit"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddKit"

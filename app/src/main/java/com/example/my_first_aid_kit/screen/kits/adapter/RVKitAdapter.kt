@@ -50,7 +50,7 @@ class RVKitAdapter(val eventKit: EventKit) : RecyclerView.Adapter<RecyclerView.V
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is KitViewHolder -> { holder.bind(kitList[position], holder.adapterPosition) }
+            is KitViewHolder -> { holder.bind(kitList[holder.adapterPosition], holder.adapterPosition) }
             is AddKitViewHolder -> { holder.bind() }
         }
     }
