@@ -1,6 +1,7 @@
 package com.example.my_first_aid_kit
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +23,6 @@ class MainActivity : AppCompatActivity() {
         val bottomNavMenu = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNavMenu.setupWithNavController(navController)
 
-        //test()
-        //SettingRepository.getInstance().loadTheme(this)
-        SettingRepository.getInstance().isDarkMode(true)
     }
 
 }

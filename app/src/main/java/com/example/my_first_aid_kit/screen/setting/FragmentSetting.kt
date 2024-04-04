@@ -1,26 +1,20 @@
 package com.example.my_first_aid_kit.screen.setting
 
 import android.content.Context
-import androidx.fragment.app.viewModels
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.my_first_aid_kit.App
 import com.example.my_first_aid_kit.R
-import com.example.my_first_aid_kit.databinding.FragmentKitsListBinding
 import com.example.my_first_aid_kit.databinding.FragmentSettingBinding
 import com.example.my_first_aid_kit.repository.SettingRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+
 
 class FragmentSetting : Fragment() {
 
-    //private val viewModel: FragmentSettingViewModel by viewModels()
     private lateinit var viewModel: FragmentSettingViewModel
     private var _binding: FragmentSettingBinding? = null
     val binding
@@ -33,12 +27,34 @@ class FragmentSetting : Fragment() {
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.switchDarkMode.isChecked = viewModel.setSwitchDarkMode()
+
+        when(viewModel.backgroundWork){
+            SettingRepository.BACKGROUND_WORK_ONE -> binding.rbBut1.isChecked = true
+            SettingRepository.BACKGROUND_WORK_TWO -> binding.rbBut2.isChecked = true
+            SettingRepository.BACKGROUND_WORK_TREE -> binding.rbBut3.isChecked = true
+            SettingRepository.BACKGROUND_WORK_FOUR-> binding.rbBut4.isChecked = true
+        }
+
+        binding.backgroundWorkGroup.setOnCheckedChangeListener { _, id ->
+            when(id){
+                R.id.rb_but_1 -> viewModel.changeBackgroundWork(SettingRepository.BACKGROUND_WORK_ONE)
+                R.id.rb_but_2 -> viewModel.changeBackgroundWork(SettingRepository.BACKGROUND_WORK_TWO)
+                R.id.rb_but_3 -> viewModel.changeBackgroundWork(SettingRepository.BACKGROUND_WORK_TREE)
+                R.id.rb_but_4 -> viewModel.changeBackgroundWork(SettingRepository.BACKGROUND_WORK_FOUR)
+            }
+        }
+
         binding.buttonNotification.setOnClickListener{
-            val shared = context?.getSharedPreferences(SettingRepository.TAG_DARK_MODE, Context.MODE_PRIVATE)
-            val editor = shared?.edit()
-            editor?.putInt(SettingRepository.TAG_DARK_MODE, SettingRepository.MODE_LIGHT)
-            editor?.apply()
-            //SettingRepository.getInstance().setTheme()
+            val intent = Intent()
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS")
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
+            startActivity(intent)
+        }
+
+        binding.switchDarkMode.setOnCheckedChangeListener { _, _ ->
+            viewModel.changeDarkMode()
         }
 
         return view

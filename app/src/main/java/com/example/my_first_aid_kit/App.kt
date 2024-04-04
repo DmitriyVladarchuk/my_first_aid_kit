@@ -8,7 +8,7 @@ import com.example.my_first_aid_kit.repository.SettingRepository
 class App : Application() {
     override fun onCreate(){
         super.onCreate()
-        SettingRepository.getInstance().loadTheme()
+        SettingRepository.getInstance().loadData()
     }
 
     init{
