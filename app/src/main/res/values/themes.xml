@@ -7,5 +7,9 @@
         <item name="android:statusBarColor">@color/mainColor</item>
     </style>
 
+    <style name="NumberPickerStyle">
+        <item name="colorControlNormal">@color/blue1</item>
+    </style>
+
     <style name="Theme.My_first_aid_kit" parent="Base.Theme.My_first_aid_kit" />
 </resources>

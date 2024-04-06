@@ -8,11 +8,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.my_first_aid_kit.R
-import com.example.my_first_aid_kit.models.Kit
 import com.example.my_first_aid_kit.models.MedicamentForKit
-import com.example.my_first_aid_kit.screen.kits.adapter.RVKitAdapter
 
 class RVMedicamentAdapter(val eventMed: EventMedicament) : RecyclerView.Adapter<RVMedicamentAdapter.MedicamentItem>() {
 
@@ -44,7 +41,7 @@ class RVMedicamentAdapter(val eventMed: EventMedicament) : RecyclerView.Adapter<
             image.setColorFilter(ContextCompat.getColor(itemView.context, medicament.idColor))
             when(medicament.idReleaseForm){
                 0 -> image.setImageResource(R.drawable.add_48px)
-                1 -> image.setImageResource(R.drawable.pill_48px)
+                1 -> image.setImageResource(R.drawable.capsule_48px)
             }
             name.text = medicament.name
             expirationDate.text = medicament.expirationDate

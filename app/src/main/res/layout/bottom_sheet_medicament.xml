@@ -28,7 +28,7 @@
         android:textAlignment="viewStart"
         android:textColor="@color/textColor"
         android:textSize="20sp"
-        app:icon="@drawable/pill_48px"
+        app:icon="@drawable/capsule_48px"
         app:iconSize="22dp"
         app:iconTint="@color/blue1"
         app:layout_constraintEnd_toEndOf="parent"

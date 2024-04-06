@@ -11,7 +11,6 @@
     <string name="add">Добавить</string>
     <string name="update">Изменить</string>
     <string name="delete">Удалить</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="accept">Принять</string>
     <string name="move">Переместить</string>
@@ -22,4 +21,17 @@
     <string name="work_1_by_2_day">Раз в два дня</string>
     <string name="work_by_week">Раз в неделю</string>
     <string name="notification">Уведомления</string>
+    <string name="add_medicamention">Добавление лекарства</string>
+    <string name="valid">Годен до:</string>
+    <string name="count">Количество</string>
+    
+    <string-array name="release_form">
+        <item>Капсулы</item>
+        <item>Таблетки</item>
+        <item>Сироп</item>
+        <item>Инъекция</item>
+        <!-- <item>Мазь</item>
+        <item>Крем</item> -->
+        <item>Спрей</item>
+    </string-array>
 </resources>

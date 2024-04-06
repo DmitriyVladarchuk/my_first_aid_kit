@@ -25,7 +25,7 @@
             android:id="@+id/image_medicament"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/pill_48px"
+            android:src="@drawable/capsule_48px"
             android:layout_weight="70"
             />
         <LinearLayout
