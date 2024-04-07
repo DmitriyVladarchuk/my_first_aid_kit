@@ -2,8 +2,16 @@ package com.example.my_first_aid_kit.repository
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 
 import com.example.my_first_aid_kit.App
+import com.example.my_first_aid_kit.DataBase.LocalDataBase
+import com.example.my_first_aid_kit.models.Kit
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class SettingRepository private constructor(){
 
@@ -29,6 +37,27 @@ class SettingRepository private constructor(){
 
     var darkMode: Int = MODE_LIGHT
     var backgroundWork: Int = 12
+
+    private val localDB by lazy {
+        LocalDataBase.getBataBase(App.context).dao()
+    }
+
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+
+    fun onDestroy(){
+        coroutineScope.cancel()
+    }
+
+    val kitList: LiveData<List<Kit>> = localDB.getAllKits()
+        .asLiveData() // конвертируем в тип LiveData
+
+    fun newKit(kit: Kit){
+        coroutineScope.launch {
+            localDB.insertKit(kit)
+        }
+    }
+
+    // Shared Preferences
 
     fun loadData(){
         loadTheme()

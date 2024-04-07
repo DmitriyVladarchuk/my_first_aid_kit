@@ -3,7 +3,6 @@ package com.example.my_first_aid_kit.screen.kits
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
@@ -13,6 +12,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_first_aid_kit.R
@@ -22,8 +22,9 @@ import com.example.my_first_aid_kit.screen.kits.adapter.RVKitAdapter
 
 class FragmentKitsList : Fragment(), RVKitAdapter.EventKit {
 
-    private val viewModel: FragmentKitsListViewModel by viewModels()
+    //private val viewModel: FragmentKitsListViewModel by viewModels()
     private var _binding: FragmentKitsListBinding? = null
+    private lateinit var viewModel: FragmentKitsListViewModel
     val binding
         get() = _binding!!
 
@@ -35,15 +36,15 @@ class FragmentKitsList : Fragment(), RVKitAdapter.EventKit {
         _binding = FragmentKitsListBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        viewModel = ViewModelProvider(this).get(FragmentKitsListViewModel::class.java)
+
         val adapter = RVKitAdapter(this)
-        val kitLis: List<Kit> = listOf(
-            Kit(0, "One", R.color.blue1),
-            Kit(1, "Two", R.color.blue2),
-            Kit(2, "Tree", R.color.purple)
-        )
-        adapter.kitList = kitLis
-        binding.rvKit.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvKit.adapter = adapter
+        viewModel.kitList.observe(viewLifecycleOwner){
+            adapter.kitList = it
+        }
+
+        binding.rvKit.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         return view
     }
