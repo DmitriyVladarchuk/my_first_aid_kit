@@ -21,7 +21,7 @@ import androidx.room.PrimaryKey
     )])
 data class MedicationGroup(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id_med_kit")
-    var idMedKit: Int,
+    var idMedKit: Int = 0,
 
     @ColumnInfo(name = "id_kit")
     var idKit: Int,

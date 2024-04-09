@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.room.util.convertUUIDToByte
 
 import com.example.my_first_aid_kit.App
 import com.example.my_first_aid_kit.DataBase.LocalDataBase
 import com.example.my_first_aid_kit.models.Kit
+import com.example.my_first_aid_kit.models.Medicament
+import com.example.my_first_aid_kit.models.MedicamentForKit
+import com.example.my_first_aid_kit.models.MedicationGroup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -51,11 +55,52 @@ class SettingRepository private constructor(){
     val kitList: LiveData<List<Kit>> = localDB.getAllKits()
         .asLiveData() // конвертируем в тип LiveData
 
+    fun getMedForKit(id: Int): LiveData<List<MedicamentForKit>>{
+        return localDB.getMedicamentForKit(id).asLiveData()
+    }
+
+    fun getKit(id: Int): LiveData<Kit>{
+        return localDB.getKitFromId(id)
+    }
+
     fun newKit(kit: Kit){
         coroutineScope.launch {
             localDB.insertKit(kit)
         }
     }
+
+    fun getMedicament(name: String): LiveData<Medicament>{
+        return localDB.getMedicamentFromName(name)
+    }
+
+    fun getMedicamentInfo(id: Int): LiveData<Medicament> {
+        return localDB.getMedicamentById(id)
+    }
+
+    fun newMedicament(medicament: Medicament){
+        coroutineScope.launch {
+            localDB.insertMedicament(medicament)
+        }
+    }
+
+    fun newMedicamentGroup(medicationGroup: MedicationGroup){
+        coroutineScope.launch{
+            localDB.insertMedForKit(medicationGroup)
+        }
+    }
+
+    fun updateKit(kit: Kit){
+        coroutineScope.launch {
+            localDB.updateKit(kit)
+        }
+    }
+
+    fun deleteKit(kit: Kit){
+        coroutineScope.launch {
+            localDB.deleteKit(kit)
+        }
+    }
+
 
     // Shared Preferences
 

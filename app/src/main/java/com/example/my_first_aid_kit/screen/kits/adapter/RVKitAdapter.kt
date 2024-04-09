@@ -62,7 +62,7 @@ class RVKitAdapter(val eventKit: EventKit) : RecyclerView.Adapter<RecyclerView.V
         fun bind(kit: Kit, position: Int){
             imageColor.setColorFilter(ContextCompat.getColor(itemView.context, kit.idColor))
             nameKit.text = kit.name
-            cardKit.setOnClickListener{ eventKit.clickKit(position) }
+            cardKit.setOnClickListener{ eventKit.clickKit(kit) }
             cardKit.setOnLongClickListener{
                 eventKit.longClickKit(kit)
                 true
@@ -79,7 +79,7 @@ class RVKitAdapter(val eventKit: EventKit) : RecyclerView.Adapter<RecyclerView.V
     }
 
     interface EventKit{
-        fun clickKit(position: Int)
+        fun clickKit(kit: Kit)
         fun clickAddKit()
         fun longClickKit(kit: Kit)
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/bottom_sheet"
     android:paddingBottom="20dp">
 
@@ -22,7 +22,6 @@
         android:id="@+id/btnAcceptMed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:backgroundTint="@color/mainColor"
         android:text="@string/accept"
         android:textAlignment="viewStart"
@@ -33,7 +32,7 @@
         app:iconTint="@color/blue1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/btnInfoMed" />
 
     <Button
         android:id="@+id/btnEditMed"
@@ -82,4 +81,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnMoveMed" />
+
+    <Button
+        android:id="@+id/btnInfoMed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/mainColor"
+        android:text="@string/info_medicament"
+        android:textAlignment="viewStart"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        app:icon="@drawable/delete_48px"
+        app:iconSize="22dp"
+        app:iconTint="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInfo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

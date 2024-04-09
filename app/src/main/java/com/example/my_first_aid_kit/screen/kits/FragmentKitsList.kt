@@ -13,6 +13,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_first_aid_kit.R
@@ -22,7 +23,6 @@ import com.example.my_first_aid_kit.screen.kits.adapter.RVKitAdapter
 
 class FragmentKitsList : Fragment(), RVKitAdapter.EventKit {
 
-    //private val viewModel: FragmentKitsListViewModel by viewModels()
     private var _binding: FragmentKitsListBinding? = null
     private lateinit var viewModel: FragmentKitsListViewModel
     val binding
@@ -54,14 +54,14 @@ class FragmentKitsList : Fragment(), RVKitAdapter.EventKit {
         _binding = null
     }
 
-    override fun clickKit(position: Int) {
+    override fun clickKit(kit: Kit) {
         val action = FragmentKitsListDirections
-            .actionFragmentKitsListToFragmentMedicamentList(1)
+            .actionFragmentKitsListToFragmentMedicamentList(kit.idKit)
         view?.findNavController()?.navigate(action)
     }
 
     override fun clickAddKit() {
-        view?.findNavController()?.navigate(R.id.action_fragmentKitsList_to_fragmentAddKit)
+        view?.findNavController()?.navigate(R.id.action_fragmentKitsList_to_fragmentAddKit, null)
     }
 
     override fun longClickKit(kit: Kit) {
@@ -74,7 +74,15 @@ class FragmentKitsList : Fragment(), RVKitAdapter.EventKit {
 
         val btnEdit = dialog.findViewById<Button>(R.id.btnEditKit)
         btnEdit.setOnClickListener{
-            view?.findNavController()?.navigate(R.id.action_fragmentKitsList_to_fragmentUpdateKit)
+            val action = FragmentKitsListDirections
+                .actionFragmentKitsListToFragmentUpdateKit(kit.idKit)
+            view?.findNavController()?.navigate(action)
+            dialog.cancel()
+        }
+
+        val btnDelete = dialog.findViewById<Button>(R.id.btnDeleteKit)
+        btnDelete.setOnClickListener {
+            viewModel.deleteKit(kit)
             dialog.cancel()
         }
 

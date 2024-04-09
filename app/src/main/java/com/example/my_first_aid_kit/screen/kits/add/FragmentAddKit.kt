@@ -6,19 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.my_first_aid_kit.R
 import com.example.my_first_aid_kit.databinding.FragmentAddKitBinding
-import com.example.my_first_aid_kit.screen.kits.FragmentKitsListViewModel
+import com.example.my_first_aid_kit.screen.kits.update.FragmentUpdateKitArgs
+import com.example.my_first_aid_kit.screen.kits.update.ViewModelFactory
 
 
 class FragmentAddKit : Fragment() {
 
     private lateinit var viewModel: FragmentAddKitViewModel
+    private var idColor: Int = R.color.blue1
     //private val viewModel: FragmentAddKitViewModel by viewModels()
     private var _binding: FragmentAddKitBinding? = null
-    private var idColor: Int = R.color.blue1
     val binding
         get() = _binding!!
 
@@ -29,8 +30,8 @@ class FragmentAddKit : Fragment() {
     ): View {
         _binding = FragmentAddKitBinding.inflate(inflater, container, false)
         val view = binding.root
+
         viewModel = ViewModelProvider(this).get(FragmentAddKitViewModel::class.java)
-        changeColor()
 
         binding.colorBlue1.setOnClickListener{ idColor = R.color.blue1; changeColor() }
         binding.colorBlue2.setOnClickListener{ idColor = R.color.blue2; changeColor() }
@@ -40,8 +41,10 @@ class FragmentAddKit : Fragment() {
 
         binding.btnAddKit.setOnClickListener {
             viewModel.addKit(binding.textFieldKit.text.toString(), idColor)
+            view.findNavController().popBackStack()
         }
 
+        changeColor()
         return view
     }
 

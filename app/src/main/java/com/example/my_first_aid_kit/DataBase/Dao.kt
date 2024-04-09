@@ -1,5 +1,6 @@
 package com.example.my_first_aid_kit.DataBase
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -17,6 +18,9 @@ interface Dao {
     @Query("SELECT * FROM kits")
     fun getAllKits(): Flow<List<Kit>>
 
+    @Query("SELECT * FROM kits WHERE id_kit=:id")
+    fun getKitFromId(id: Int): LiveData<Kit>
+
     @Insert(entity = Kit::class)
     suspend fun insertKit(kit: Kit)
 
@@ -29,6 +33,12 @@ interface Dao {
 
     @Query("SELECT * FROM medicament")
     fun getAllMedicament(): Flow<List<Medicament>>
+
+    @Query("SELECT * FROM medicament WHERE name_med=:name")
+    fun getMedicamentFromName(name: String): LiveData<Medicament>
+
+    @Query("SELECT * FROM medicament WHERE id_med=:id")
+    fun getMedicamentById(id: Int): LiveData<Medicament>
 
     @Insert(entity = Medicament::class)
     suspend fun insertMedicament(medicament: Medicament)
@@ -51,5 +61,11 @@ interface Dao {
 
     @Delete(entity = MedicationGroup::class)
     suspend fun deleteMedForKit(medicationGroup: MedicationGroup)
+
+    @Query("SELECT mg.id_med_kit, mg.id_kit, m.id_med, m.name_med, m.release_form, mg.count, mg.expiration_date, mg.id_color FROM medication_group AS mg INNER JOIN medicament AS m ON mg.id_med = m.id_med WHERE mg.id_kit = :idKit")
+    fun getMedicamentForKit(idKit: Int): Flow<List<MedicamentForKit>>
+
+    @Query("SELECT mg.id_med_kit, mg.id_kit, m.id_med, m.name_med, m.release_form, mg.count, mg.expiration_date, mg.id_color FROM medication_group AS mg INNER JOIN medicament AS m ON mg.id_med = m.id_med WHERE mg.id_med_kit = :id")
+    fun getMedicamentForKitById(id: Int): LiveData<MedicamentForKit>
     // ...
 }

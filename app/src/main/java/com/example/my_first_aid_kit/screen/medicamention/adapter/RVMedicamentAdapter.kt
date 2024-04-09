@@ -39,9 +39,12 @@ class RVMedicamentAdapter(val eventMed: EventMedicament) : RecyclerView.Adapter<
 
         fun bind(medicament: MedicamentForKit){
             image.setColorFilter(ContextCompat.getColor(itemView.context, medicament.idColor))
-            when(medicament.idReleaseForm){
-                0 -> image.setImageResource(R.drawable.add_48px)
-                1 -> image.setImageResource(R.drawable.capsule_48px)
+            when(medicament.releaseForm){
+                "Капсулы" -> image.setImageResource(R.drawable.capsule_48px)
+                "Таблетки" -> image.setImageResource(R.drawable.pill)
+                "Сироп" -> image.setImageResource(R.drawable.medication_liquid_48px)
+                "Инъекция" -> image.setImageResource(R.drawable.vaccines_48px)
+                "Спрей" -> image.setImageResource(R.drawable.pediatrics_48px)
             }
             name.text = medicament.name
             expirationDate.text = medicament.expirationDate

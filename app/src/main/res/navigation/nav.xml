@@ -15,7 +15,8 @@
             app:destination="@id/fragmentMedicamentList" />
         <action
             android:id="@+id/action_fragmentKitsList_to_fragmentAddKit"
-            app:destination="@id/fragmentAddKit" />
+            app:destination="@id/fragmentAddKit"
+            app:popUpTo="@id/fragmentKitsList" />
         <action
             android:id="@+id/action_fragmentKitsList_to_fragmentUpdateKit"
             app:destination="@id/fragmentUpdateKit" />
@@ -49,6 +50,9 @@
         <argument
             android:name="idKit"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_fragmentMedicamentList_to_fragmentMedInfo"
+            app:destination="@id/fragmentMedInfo" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddKit"
@@ -59,13 +63,30 @@
         android:id="@+id/fragmentAddMedicament"
         android:name="com.example.my_first_aid_kit.screen.medicamention.add.FragmentAddMedicament"
         android:label="fragment_add_medicament"
-        tools:layout="@layout/fragment_add_medicament" />
+        tools:layout="@layout/fragment_add_medicament" >
+        <argument
+            android:name="idKit"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentUpdateKit"
         android:name="com.example.my_first_aid_kit.screen.kits.update.FragmentUpdateKit"
-        android:label="FragmentUpdateKit" />
+        android:label="FragmentUpdateKit" >
+        <argument
+            android:name="idKit"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentUpdateMedicament"
         android:name="com.example.my_first_aid_kit.screen.medicamention.update.FragmentUpdateMedicament"
         android:label="FragmentUpdateMedicament" />
+    <fragment
+        android:id="@+id/fragmentMedInfo"
+        android:name="com.example.my_first_aid_kit.screen.medicamentInfo.FragmentMedInfo"
+        android:label="fragment_med_info"
+        tools:layout="@layout/fragment_med_info" >
+        <argument
+            android:name="idMed"
+            app:argType="string" />
+    </fragment>
 </navigation>

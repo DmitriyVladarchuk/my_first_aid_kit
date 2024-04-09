@@ -10,4 +10,5 @@ class FragmentAddKitViewModel : ViewModel() {
         val kit = Kit(name = name, idColor = idColor)
         SettingRepository.getInstance().newKit(kit)
     }
+
 }

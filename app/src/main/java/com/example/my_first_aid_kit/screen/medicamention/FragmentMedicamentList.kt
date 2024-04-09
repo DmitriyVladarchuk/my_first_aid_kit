@@ -13,19 +13,30 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.my_first_aid_kit.R
 import com.example.my_first_aid_kit.databinding.FragmentKitsListBinding
 import com.example.my_first_aid_kit.databinding.FragmentMedicamentionListBinding
 import com.example.my_first_aid_kit.models.Kit
+import com.example.my_first_aid_kit.models.Medicament
 import com.example.my_first_aid_kit.models.MedicamentForKit
+import com.example.my_first_aid_kit.repository.SettingRepository
+import com.example.my_first_aid_kit.screen.kits.FragmentKitsListDirections
+import com.example.my_first_aid_kit.screen.kits.FragmentKitsListViewModel
 import com.example.my_first_aid_kit.screen.kits.adapter.RVKitAdapter
+import com.example.my_first_aid_kit.screen.kits.update.FragmentUpdateKitArgs
+import com.example.my_first_aid_kit.screen.kits.update.FragmentUpdateKitViewModel
+import com.example.my_first_aid_kit.screen.kits.update.ViewModelFactory
 import com.example.my_first_aid_kit.screen.medicamention.adapter.RVMedicamentAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FragmentMedicamentList : Fragment(), RVMedicamentAdapter.EventMedicament {
 
-    private val viewModel: FragmentMedicamentListViewModel by viewModels()
+    private lateinit var viewModel: FragmentMedicamentListViewModel
     private var _binding: FragmentMedicamentionListBinding? = null
     val binding
         get() = _binding!!
@@ -38,21 +49,24 @@ class FragmentMedicamentList : Fragment(), RVMedicamentAdapter.EventMedicament {
         val view = binding.root
 
         val idKit = FragmentMedicamentListArgs.fromBundle(requireArguments()).idKit
-        binding.textView5.text = idKit.toString()
+        val viewModelFactory = ViewModelMedicamentFactory(idKit)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(FragmentMedicamentListViewModel::class.java)
+
+        val idKitA = FragmentMedicamentListArgs.fromBundle(requireArguments()).idKit
+        binding.textView5.text = idKitA.toString()
 
         val adapter = RVMedicamentAdapter(this)
-        val medicamention: List<MedicamentForKit> = listOf(
-            MedicamentForKit(0, 0, 0, "One", 0,
-                5, "05.05.2025", R.color.purple),
-            MedicamentForKit(0, 0, 0, "Two", 1,
-                7, "07.07.2027", R.color.blue1)
-        )
-        adapter.medicamentList = medicamention
-        binding.rvMedicament.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvMedicament.adapter = adapter
+        viewModel.medList.observe(viewLifecycleOwner){
+            adapter.medicamentList = it
+        }
+
+        binding.rvMedicament.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         binding.addMedicamentButton.setOnClickListener{
-            view.findNavController().navigate(R.id.action_fragmentMedicamentList_to_fragmentAddMedicament)
+            val action = FragmentMedicamentListDirections
+                .actionFragmentMedicamentListToFragmentAddMedicament(idKit)
+            view.findNavController().navigate(action)
         }
 
         return view
@@ -70,6 +84,14 @@ class FragmentMedicamentList : Fragment(), RVMedicamentAdapter.EventMedicament {
         // other code
         val textInfo = dialog.findViewById<TextView>(R.id.tvInfo)
         textInfo.text = medicament.name
+
+        val btnInfo = dialog.findViewById<Button>(R.id.btnInfoMed)
+        btnInfo.setOnClickListener {
+            val action = FragmentMedicamentListDirections
+                .actionFragmentMedicamentListToFragmentMedInfo(medicament.name)
+            view?.findNavController()?.navigate(action)
+            dialog.cancel()
+        }
 
         val btnUpdate = dialog.findViewById<Button>(R.id.btnEditMed)
         btnUpdate.setOnClickListener{ view?.findNavController()

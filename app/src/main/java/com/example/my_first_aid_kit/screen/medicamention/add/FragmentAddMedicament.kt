@@ -8,28 +8,46 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.my_first_aid_kit.R
 import com.example.my_first_aid_kit.databinding.FragmentAddMedicamentBinding
+import com.example.my_first_aid_kit.models.MedicamentForKit
+import com.example.my_first_aid_kit.models.MedicationGroup
+import com.example.my_first_aid_kit.screen.medicamention.FragmentMedicamentListArgs
+import com.example.my_first_aid_kit.screen.medicamention.FragmentMedicamentListViewModel
+import com.example.my_first_aid_kit.screen.medicamention.ViewModelMedicamentFactory
 
 
 class FragmentAddMedicament : Fragment() {
 
     private var idColor: Int = R.color.blue1
     private lateinit var spinnerAdapter: SpinnerAdapter
+    private lateinit var viewModel: FragmentAddMedicamentViewModel
     private var _binding: FragmentAddMedicamentBinding? = null
     val binding
         get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val viewModelFactory = ViewModelAddMedicamentFactory(
+            FragmentAddMedicamentArgs.fromBundle(requireArguments()).idKit)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(FragmentAddMedicamentViewModel::class.java)
+
+        val list = resources.getStringArray(R.array.release_form).toList()
+        spinnerAdapter = SpinnerAdapter(requireContext(), R.layout.spinner_item, list)
+        spinnerAdapter.listReleaseForm = list
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentAddMedicamentBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val list = resources.getStringArray(R.array.release_form).toList()
-        spinnerAdapter = SpinnerAdapter(requireContext(), R.layout.spinner_item, list)
-        spinnerAdapter.listReleaseForm = list
         changeColor()
         binding.spinner.adapter = spinnerAdapter
 
@@ -53,6 +71,22 @@ class FragmentAddMedicament : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) { }
         }
 
+        binding.btnAddMed.setOnClickListener {
+            val expirationDate = binding.datePicker.dayOfMonth.toString() +
+                    "." + binding.datePicker.month.toString() + "." +
+                    binding.datePicker.year
+
+            val medGroup = MedicamentForKit(
+                idKit = viewModel.idKit,
+                name = binding.textFieldMed.text.toString(),
+                releaseForm = binding.spinner.selectedItem.toString(),
+                count = binding.countMedicament.text.toString().toInt(),
+                expirationDate = expirationDate,
+                idColor = idColor
+            )
+            viewModel.addMedicamentGroup(medGroup)
+        }
+
         return view
     }
 
@@ -66,7 +100,6 @@ class FragmentAddMedicament : Fragment() {
         binding.boxTextInputMed.boxStrokeColor = ContextCompat.getColor(requireContext(), idColor)
         binding.boxTextInputCount.boxStrokeColor = ContextCompat.getColor(requireContext(), idColor)
         binding.btnAddMed.setBackgroundColor(ContextCompat.getColor(requireContext(), idColor))
-
         spinnerAdapter.idColor = idColor
     }
 }

@@ -24,7 +24,9 @@
     <string name="add_medicamention">Добавление лекарства</string>
     <string name="valid">Годен до:</string>
     <string name="count">Количество</string>
-    
+    <string name="info_medicament">Информация о лекарстве</string>
+    <string name="back">Назад</string>
+
     <string-array name="release_form">
         <item>Капсулы</item>
         <item>Таблетки</item>
