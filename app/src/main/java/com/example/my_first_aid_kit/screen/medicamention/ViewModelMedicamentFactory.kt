@@ -7,8 +7,8 @@ import java.lang.IllegalArgumentException
 class ViewModelMedicamentFactory(private val id: Int): ViewModelProvider.Factory{
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FragmentMedicamentListViewModel::class.java)){
-            return FragmentMedicamentListViewModel(id) as T
+        if (modelClass.isAssignableFrom(MedGroupListViewModel::class.java)){
+            return MedGroupListViewModel(id) as T
         }
         throw IllegalArgumentException("Unknown ViewModel")
     }

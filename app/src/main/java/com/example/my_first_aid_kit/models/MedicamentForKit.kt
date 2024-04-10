@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 data class MedicamentForKit(
     @ColumnInfo(name = "id_med_kit") val idMedKit: Int = 0,
     @ColumnInfo(name = "id_kit") val idKit: Int,
+    @ColumnInfo(name = "id_med") val idMed: Int = 0,
     @ColumnInfo(name = "name_med") val name: String,
     @ColumnInfo(name = "release_form") val releaseForm: String,
     @ColumnInfo(name = "count") var count: Int,

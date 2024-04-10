@@ -1,4 +1,4 @@
-package com.example.my_first_aid_kit.screen.medicamention.add
+package com.example.my_first_aid_kit.screen.medicamention.update
 
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -7,15 +7,34 @@ import com.example.my_first_aid_kit.models.MedicamentForKit
 import com.example.my_first_aid_kit.models.MedicationGroup
 import com.example.my_first_aid_kit.repository.SettingRepository
 
-class FragmentAddMedicamentViewModel(id: Int) : ViewModel() {
+class UpdateMedicamentViewModel : ViewModel() {
 
-    val idKit = id
+    var medicament = SettingRepository.getInstance().currentMedForKit
+
+    fun updateMedicament(newMed: MedicamentForKit){
+
+        val editMed = MedicationGroup(medicament.value!!.idMedKit,
+            medicament.value!!.idKit,
+            medicament.value!!.idMed,
+            newMed.count,
+            newMed.expirationDate,
+            newMed.idColor)
+
+        if(newMed.name != medicament.value!!.name || newMed.releaseForm != medicament.value!!.releaseForm){
+            SettingRepository.getInstance().deleteMedicamentGroup(medicament.value!!.idMedKit)
+            addMedicamentGroup(newMed)
+        }
+        else{
+            SettingRepository.getInstance().updateMedGroup(editMed)
+        }
+
+    }
 
     private fun addMedicament(medicament: Medicament) {
         SettingRepository.getInstance().newMedicament(medicament)
     }
 
-    fun addMedicamentGroup(med: MedicamentForKit) {
+    private fun addMedicamentGroup(med: MedicamentForKit) {
         val getMed = SettingRepository.getInstance().getMedicamentFromTable(med.name, med.releaseForm)
         getMed.observeForever(object : Observer<Medicament?> {
             override fun onChanged(value: Medicament?) {
@@ -37,4 +56,5 @@ class FragmentAddMedicamentViewModel(id: Int) : ViewModel() {
             }
         })
     }
+
 }

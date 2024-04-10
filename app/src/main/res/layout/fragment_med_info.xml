@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout8"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/secondaryColor1"
     tools:context=".screen.medicamentInfo.FragmentMedInfo">
 
     <!-- TODO: Update blank fragment layout -->
@@ -120,7 +121,7 @@
         android:id="@+id/btnBack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/mainColor"
+        android:backgroundTint="@color/secondaryColor1"
         android:text="@string/back"
         android:textAlignment="viewStart"
         android:textColor="@color/textColor"

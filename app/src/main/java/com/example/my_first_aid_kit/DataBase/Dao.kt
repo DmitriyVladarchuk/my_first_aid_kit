@@ -37,6 +37,9 @@ interface Dao {
     @Query("SELECT * FROM medicament WHERE name_med=:name")
     fun getMedicamentFromName(name: String): LiveData<Medicament>
 
+    @Query("SELECT * FROM medicament WHERE name_med=:name and release_form=:releaseForm")
+    fun isMedicamentFromTable(name: String, releaseForm: String): LiveData<Medicament>
+
     @Query("SELECT * FROM medicament WHERE id_med=:id")
     fun getMedicamentById(id: Int): LiveData<Medicament>
 
@@ -61,6 +64,9 @@ interface Dao {
 
     @Delete(entity = MedicationGroup::class)
     suspend fun deleteMedForKit(medicationGroup: MedicationGroup)
+
+    @Query("DELETE FROM medication_group WHERE id_med_kit=:id")
+    suspend fun deleteMedGroupById(id: Int)
 
     @Query("SELECT mg.id_med_kit, mg.id_kit, m.id_med, m.name_med, m.release_form, mg.count, mg.expiration_date, mg.id_color FROM medication_group AS mg INNER JOIN medicament AS m ON mg.id_med = m.id_med WHERE mg.id_kit = :idKit")
     fun getMedicamentForKit(idKit: Int): Flow<List<MedicamentForKit>>

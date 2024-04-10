@@ -5,17 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.my_first_aid_kit.R
 import com.example.my_first_aid_kit.databinding.FragmentAddMedicamentBinding
 import com.example.my_first_aid_kit.models.MedicamentForKit
-import com.example.my_first_aid_kit.models.MedicationGroup
-import com.example.my_first_aid_kit.screen.medicamention.FragmentMedicamentListArgs
-import com.example.my_first_aid_kit.screen.medicamention.FragmentMedicamentListViewModel
-import com.example.my_first_aid_kit.screen.medicamention.ViewModelMedicamentFactory
+import com.example.my_first_aid_kit.utill.ValidateData
 
 
 class FragmentAddMedicament : Fragment() {
@@ -72,9 +69,8 @@ class FragmentAddMedicament : Fragment() {
         }
 
         binding.btnAddMed.setOnClickListener {
-            val expirationDate = binding.datePicker.dayOfMonth.toString() +
-                    "." + binding.datePicker.month.toString() + "." +
-                    binding.datePicker.year
+            val expirationDate = ValidateData.getInstance().collectOnDate(binding.datePicker.dayOfMonth,
+                binding.datePicker.month, binding.datePicker.year)
 
             val medGroup = MedicamentForKit(
                 idKit = viewModel.idKit,
@@ -85,6 +81,8 @@ class FragmentAddMedicament : Fragment() {
                 idColor = idColor
             )
             viewModel.addMedicamentGroup(medGroup)
+
+            view.findNavController().popBackStack()
         }
 
         return view

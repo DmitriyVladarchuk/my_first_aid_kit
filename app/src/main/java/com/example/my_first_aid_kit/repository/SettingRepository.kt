@@ -3,6 +3,7 @@ package com.example.my_first_aid_kit.repository
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.room.util.convertUUIDToByte
 
@@ -55,6 +56,14 @@ class SettingRepository private constructor(){
     val kitList: LiveData<List<Kit>> = localDB.getAllKits()
         .asLiveData() // конвертируем в тип LiveData
 
+    val allMed: LiveData<List<Medicament>> = localDB.getAllMedicament().asLiveData()
+
+    var currentMedForKit: MutableLiveData<MedicamentForKit> = MutableLiveData()
+
+    fun setCurrentMedForKit(med: MedicamentForKit){
+        currentMedForKit.value = med
+    }
+
     fun getMedForKit(id: Int): LiveData<List<MedicamentForKit>>{
         return localDB.getMedicamentForKit(id).asLiveData()
     }
@@ -73,6 +82,10 @@ class SettingRepository private constructor(){
         return localDB.getMedicamentFromName(name)
     }
 
+    fun getMedicamentFromTable(name: String, releaseForm: String): LiveData<Medicament>{
+        return localDB.isMedicamentFromTable(name, releaseForm)
+    }
+
     fun getMedicamentInfo(id: Int): LiveData<Medicament> {
         return localDB.getMedicamentById(id)
     }
@@ -89,9 +102,22 @@ class SettingRepository private constructor(){
         }
     }
 
+    fun deleteMedicamentGroup(id: Int){
+        coroutineScope.launch {
+            localDB.deleteMedGroupById(id)
+        }
+    }
+
+
     fun updateKit(kit: Kit){
         coroutineScope.launch {
             localDB.updateKit(kit)
+        }
+    }
+
+    fun updateMedGroup(med: MedicationGroup){
+        coroutineScope.launch {
+            localDB.updateMedForKit(med)
         }
     }
 
