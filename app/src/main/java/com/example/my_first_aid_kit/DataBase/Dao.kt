@@ -4,13 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import com.example.my_first_aid_kit.models.Kit
 import com.example.my_first_aid_kit.models.Medicament
 import com.example.my_first_aid_kit.models.MedicamentForKit
 import com.example.my_first_aid_kit.models.MedicationGroup
+import com.example.my_first_aid_kit.models.Reminder
+import com.example.my_first_aid_kit.models.ReminderDetails
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -73,5 +75,30 @@ interface Dao {
 
     @Query("SELECT mg.id_med_kit, mg.id_kit, m.id_med, m.name_med, m.release_form, mg.count, mg.expiration_date, mg.id_color FROM medication_group AS mg INNER JOIN medicament AS m ON mg.id_med = m.id_med WHERE mg.id_med_kit = :id")
     fun getMedicamentForKitById(id: Int): LiveData<MedicamentForKit>
-    // ...
+
+    // Reminders
+    @Query("SELECT * FROM reminders")
+    fun getAllReminders(): Flow<List<Reminder>>
+
+    @Query("SELECT * FROM reminders WHERE id_med_kit=:idMedKit")
+    fun getAllRemindersByIdMedKit(idMedKit: Int): Flow<List<Reminder>>
+
+    @Query("SELECT * FROM reminders WHERE id_reminder=:idReminder")
+    fun getReminderById(idReminder: Int): LiveData<Reminder>
+
+    @Insert(entity = Reminder::class)
+    suspend fun insertReminder(reminder: Reminder)
+
+    @Update(entity = Reminder::class)
+    suspend fun updateReminder(reminder: Reminder)
+
+    @Delete(entity = Reminder::class)
+    suspend fun deleteReminder(reminder: Reminder)
+
+//    @Query("SELECT * FROM reminders INNER JOIN medication_group ON reminders.id_med_kit = medication_group.id_med_kit")
+//    fun getAllReminderWithMedicationGroup(): LiveData<List<ReminderWithMedicationGroup>>
+
+    @Transaction
+    @Query("SELECT * FROM reminders INNER JOIN medication_group ON reminders.id_med_kit = medication_group.id_med_kit INNER JOIN medicament ON medication_group.id_med = medicament.id_med")
+    fun getAllReminderWithMedicationGroup(): Flow<List<ReminderDetails>>
 }

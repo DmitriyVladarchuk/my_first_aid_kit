@@ -44,4 +44,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@android:color/white" />
 
+    <Button
+        android:id="@+id/btnBackForKit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryColor1"
+        android:text="@string/back"
+        android:textAlignment="viewStart"
+        android:textColor="@color/textColor"
+        android:textSize="16sp"
+        app:icon="@drawable/arrow_back_48px"
+        app:iconSize="20dp"
+        app:iconTint="@color/textColor"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

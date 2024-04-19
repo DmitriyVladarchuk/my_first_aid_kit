@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_fragmentMedicamentList_to_fragmentMedInfo"
             app:destination="@id/fragmentMedInfo" />
+        <action
+            android:id="@+id/action_fragmentMedicamentList_to_fragmentReminder"
+            app:destination="@id/fragmentReminder" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddKit"
@@ -88,5 +91,17 @@
         <argument
             android:name="idMed"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentReminder"
+        android:name="com.example.my_first_aid_kit.screen.addReminder.FragmentReminder"
+        android:label="fragment_reminder"
+        tools:layout="@layout/fragment_reminder" >
+        <argument
+            android:name="idMedKit"
+            app:argType="integer" />
+        <argument
+            android:name="idMed"
+            app:argType="integer" />
     </fragment>
 </navigation>

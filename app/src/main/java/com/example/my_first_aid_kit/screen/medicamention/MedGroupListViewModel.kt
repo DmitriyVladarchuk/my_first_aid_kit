@@ -27,8 +27,8 @@ class MedGroupListViewModel(id: Int) : ViewModel() {
         val getMed = SettingRepository.getInstance().getMedicament(med.name)
         getMed.observeForever(object : Observer<Medicament?> {
             override fun onChanged(value: Medicament?) {
-                if (value?.idMed != null) {
-                    val newMed = MedicationGroup(idKit = med.idKit, idMed = value.idMed, count = med.count,
+                if (value?.medicamentId != null) {
+                    val newMed = MedicationGroup(idKit = med.idKit, idMed = value.medicamentId, count = med.count,
                         expirationDate = med.expirationDate, idColor = med.idColor)
                     SettingRepository.getInstance().newMedicamentGroup(newMed)
                     getMed.removeObserver(this)

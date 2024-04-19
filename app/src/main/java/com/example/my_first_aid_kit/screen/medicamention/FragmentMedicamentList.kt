@@ -63,6 +63,10 @@ class FragmentMedicamentList : Fragment(), RVMedicamentAdapter.EventMedicament {
             view.findNavController().navigate(action)
         }
 
+        binding.btnBackForKit.setOnClickListener {
+            view.findNavController().popBackStack()
+        }
+
         return view
     }
 
@@ -83,6 +87,14 @@ class FragmentMedicamentList : Fragment(), RVMedicamentAdapter.EventMedicament {
         btnInfo.setOnClickListener {
             val action = FragmentMedicamentListDirections
                 .actionFragmentMedicamentListToFragmentMedInfo(medicament.name)
+            view?.findNavController()?.navigate(action)
+            dialog.cancel()
+        }
+
+        val btnReminder = dialog.findViewById<Button>(R.id.btnReminder)
+        btnReminder.setOnClickListener {
+            val action = FragmentMedicamentListDirections
+                .actionFragmentMedicamentListToFragmentReminder(medicament.idMedKit, medicament.idMed)
             view?.findNavController()?.navigate(action)
             dialog.cancel()
         }
@@ -124,6 +136,7 @@ class FragmentMedicamentList : Fragment(), RVMedicamentAdapter.EventMedicament {
             btnMoveMed.setOnClickListener {
                 val kit: Kit = allKit.value!!.get(spinnerKit.selectedItemPosition)
                 viewModel.moveMed(kit, medicament)
+                dialogMove.cancel()
             }
 
             dialogMove.show();

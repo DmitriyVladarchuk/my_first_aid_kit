@@ -21,7 +21,7 @@ class FragmentAddMedicamentViewModel(id: Int) : ViewModel() {
             override fun onChanged(value: Medicament?) {
                 if (value != null) {
                     if (value.nameMed == med.name && value.releaseForm == med.releaseForm) {
-                        val newMed = MedicationGroup(idKit = med.idKit, idMed = value.idMed, count = med.count,
+                        val newMed = MedicationGroup(idKit = med.idKit, idMed = value.medicamentId, count = med.count,
                             expirationDate = med.expirationDate, idColor = med.idColor)
                         SettingRepository.getInstance().newMedicamentGroup(newMed)
                         getMed.removeObserver(this)

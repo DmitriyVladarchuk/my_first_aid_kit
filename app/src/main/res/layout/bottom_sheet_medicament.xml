@@ -32,7 +32,7 @@
         app:iconTint="@color/blue1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnInfoMed" />
+        app:layout_constraintTop_toBottomOf="@+id/btnReminder" />
 
     <Button
         android:id="@+id/btnEditMed"
@@ -91,10 +91,26 @@
         android:textAlignment="viewStart"
         android:textColor="@color/textColor"
         android:textSize="20sp"
-        app:icon="@drawable/delete_48px"
+        app:icon="@drawable/info_48px"
         app:iconSize="22dp"
-        app:iconTint="@color/red"
+        app:iconTint="@color/blue1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvInfo" />
+
+    <Button
+        android:id="@+id/btnReminder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/mainColor"
+        android:text="@string/add_reminder"
+        android:textAlignment="viewStart"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        app:icon="@drawable/add_48px"
+        app:iconSize="22dp"
+        app:iconTint="@color/blue1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnInfoMed" />
 </androidx.constraintlayout.widget.ConstraintLayout>

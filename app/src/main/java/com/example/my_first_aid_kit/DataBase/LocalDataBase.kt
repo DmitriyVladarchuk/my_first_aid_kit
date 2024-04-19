@@ -9,10 +9,11 @@ import com.example.my_first_aid_kit.models.Kit
 import com.example.my_first_aid_kit.models.Medicament
 import com.example.my_first_aid_kit.models.MedicamentForKit
 import com.example.my_first_aid_kit.models.MedicationGroup
+import com.example.my_first_aid_kit.models.Reminder
 
 @Database(
-    entities = [Kit::class, Medicament::class, MedicationGroup::class],
-    version = 1,
+    entities = [Kit::class, Medicament::class, MedicationGroup::class, Reminder::class],
+    version = 6,
     exportSchema = false
 )
 abstract class LocalDataBase: RoomDatabase() {

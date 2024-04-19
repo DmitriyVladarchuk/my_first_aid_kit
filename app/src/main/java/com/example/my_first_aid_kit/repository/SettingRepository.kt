@@ -13,6 +13,7 @@ import com.example.my_first_aid_kit.models.Kit
 import com.example.my_first_aid_kit.models.Medicament
 import com.example.my_first_aid_kit.models.MedicamentForKit
 import com.example.my_first_aid_kit.models.MedicationGroup
+import com.example.my_first_aid_kit.models.Reminder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -53,16 +54,17 @@ class SettingRepository private constructor(){
         coroutineScope.cancel()
     }
 
-    val kitList: LiveData<List<Kit>> = localDB.getAllKits()
-        .asLiveData() // конвертируем в тип LiveData
+    val kitList: LiveData<List<Kit>> = localDB.getAllKits().asLiveData()
 
     val allMed: LiveData<List<Medicament>> = localDB.getAllMedicament().asLiveData()
 
+    // Говно исправить
     var currentMedForKit: MutableLiveData<MedicamentForKit> = MutableLiveData()
 
     fun setCurrentMedForKit(med: MedicamentForKit){
         currentMedForKit.value = med
     }
+    // Говно закончилось
 
     fun getMedForKit(id: Int): LiveData<List<MedicamentForKit>>{
         return localDB.getMedicamentForKit(id).asLiveData()
@@ -75,6 +77,18 @@ class SettingRepository private constructor(){
     fun newKit(kit: Kit){
         coroutineScope.launch {
             localDB.insertKit(kit)
+        }
+    }
+
+    fun updateKit(kit: Kit){
+        coroutineScope.launch {
+            localDB.updateKit(kit)
+        }
+    }
+
+    fun deleteKit(kit: Kit){
+        coroutineScope.launch {
+            localDB.deleteKit(kit)
         }
     }
 
@@ -108,25 +122,39 @@ class SettingRepository private constructor(){
         }
     }
 
-
-    fun updateKit(kit: Kit){
-        coroutineScope.launch {
-            localDB.updateKit(kit)
-        }
-    }
-
     fun updateMedGroup(med: MedicationGroup){
         coroutineScope.launch {
             localDB.updateMedForKit(med)
         }
     }
 
-    fun deleteKit(kit: Kit){
+    // Reminders
+
+    fun getAllReminders() = localDB.getAllReminders()
+
+    fun getReminderById(idReminder: Int) = localDB.getReminderById(idReminder)
+
+    fun getRemindersByMedKit(idMedKit: Int) = localDB.getAllRemindersByIdMedKit(idMedKit)
+
+    fun newReminder(reminder: Reminder){
         coroutineScope.launch {
-            localDB.deleteKit(kit)
+            localDB.insertReminder(reminder)
         }
     }
 
+    fun updateReminder(reminder: Reminder){
+        coroutineScope.launch {
+            localDB.updateReminder(reminder)
+        }
+    }
+
+    fun deleteReminder(reminder: Reminder){
+        coroutineScope.launch {
+            localDB.deleteReminder(reminder)
+        }
+    }
+
+    fun getAllReminderWithMedGroup() = localDB.getAllReminderWithMedicationGroup().asLiveData()
 
     // Shared Preferences
 
